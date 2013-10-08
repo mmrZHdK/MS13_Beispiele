@@ -1,5 +1,5 @@
-// Kurz-Einführung in JavaScript
-// 'most misunderstood programming language'
+// Kurz-Einführung in JavaScript *
+// 'most misunderstood programming language' 
 
 Kurz-Einführung JavaScript
 - Grundlagen
