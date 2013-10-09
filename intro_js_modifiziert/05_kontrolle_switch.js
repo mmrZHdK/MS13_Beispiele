@@ -22,11 +22,13 @@ switch ( a ) {
     print( "sehr" );
     break;
   case 6:
+    // Vorsicht: da es hier kein "break"-Statement hat, wird auch der
+    // nachfolgende Code für Case "10" ausgeführt!
     print( "kleine" );
   case 10:
     print( "Zahl");
     break;
-  case 20:
+  default: // Falls oben nichts zutrifft...
     print( "grosse Zahl" );
 }
 
