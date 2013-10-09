@@ -3,12 +3,12 @@
 // Variablen, Typen, Literale
 
 var a = 1;
-a = 2;
+a = 2; // ACHTUNG: erstellt eine globale Variable, nie verwenden!
 var meinWert = 5.99;
 var PI = 3.1415926535;
 var $ = 7;
 var _ = "hallo" + "welt";
-riesig32 = -8.65e12;
+var riesig32 = -8.65e12;
 
 var text = "Weisse \nWäsche waschen";
 var rechnung1 = 2 + 3 * 7 / 8 - 3;
