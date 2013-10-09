@@ -12,7 +12,7 @@ switch ( expression ) {
   case wertD:
     statements;
     break;
-  else:
+  default:
     statements;
 }
 
