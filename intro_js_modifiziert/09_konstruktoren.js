@@ -2,34 +2,81 @@
 
 // Konstruktoren, Objekte mit Methoden
 
-function machPerson() {
-  return {
-    name: 'Ohne Name',
+function vorstellen( person ) {
+  print( "Hej, ich bin " + person.name );
+}
+
+private function machPerson( in_name ) {
+  var lokalerMensch = {
+    name: in_name,
     alter: 0
   };
+  return lokalerMensch;
 }
-var leererMensch = machPerson();
+var leererMensch = machPerson( "Ohne Name" );
+vorstellen( leererMensch );
+var zweiterMensch = machPerson( "Ramun" );
+vorstellen( zweiterMensch );
 vorstellen( leererMensch );
 
-function machHoeflichePerson() {
-  var person = {
-    name: 'Ohne Name',
-    alter: 0
+
+
+console.log( meinObjekt.name );
+meinObjekt.neuesProperty = 5643;
+
+
+var text = "Hallo";
+text.reverse();
+
+
+
+function MachHoeflichePerson( in_name ) {
+  var person = {,
+    name: in_name,
+    alter: 0,
+    vorstellen: function () {
+      console.log( "Guten Tag, ich bin " + this.name );
+    }
   };
-  person.vorstellen = function () {
-    print( "Guten Tag, ich bin " + name );
-  }
   return person;
 }
 
-var einstein = machHoeflichePerson();
-einstein.name = "Herr Einstein";
-einstein.vorstellen();
+var einstein = MachHoeflichePerson( "Herr Einstein" );
+einstein.vorstellen();  //---> Guten Tag, ich bin Herr Einstein
+einstein.name = "Albert";
+einstein.vorstellen();  //---> Guten Tag, ich bin Albert
 
-var stress = machHoeflichePerson();
-stress.name = "Stress";
+var stress = MachHoeflichePerson( "Stress" );
+stress.vorstellen();  //---> Guten Tag, ich bin Stress
+
 stress.vorstellen = function () {
-  print( "Hej! *#()§&, ich bin " + name );  // name ?!?!
+  console.log( "Hej! *#()§&, ich bin " + this.name );  // name ?!?!
 }
-stress.vorstellen();
+stress.vorstellen();  //--->Hej! *#()§&, ich bin Stress
+
+
+function Person( in_name ) {
+  return {
+    this.name: in_name,
+    this.sagHallo: function() {
+      this.name = "Neuer Name";
+    }
+  };
+}
+
+
+var antonieta = new Person( "Maria Antonieta ..." );
+
+--- > { name: "Maria Antonieta ...",
+        sagHallo: function () { /* die Funktion */ }
+      }
+      
+antonieta.sagHallo();
+--- > { name: "Neuer Name",
+        sagHallo: function () { /* die Funktion */ }
+      }
+
+
+
+
 

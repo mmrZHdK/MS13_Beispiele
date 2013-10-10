@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html  lang="en">  <head>  <meta charset="utf-8"  />
+<meta           name="viewport"          content="width=device-width,
+initial-scale=0.5">         <title>Ebenenmanager</title>        <link
+rel="stylesheet"
+href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+/>   <script   src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script                  src="jquery.ui.touch-punch.min.js"></script>
+
+<style>  body  { min-width:  520px;  overflow:  hidden; }  .column  {
+position: fixed;  width: 250px; right:-150px;float: left}  .portlet {
+margin:  0  1em 1em  0;  overflow:  hidden; background-color:  white}
+.portlet-header  {float:  left;  height:  88px;  padding:4px;  width:
+900px;font-size:200%;}  .portlet-header  .ui-icon   {  float:  left;}
+.portlet-content  {  display:  none;  padding:  0.4em;  width:250px;}
+.portlet-icon{width:  88px; height:  88px;  top:  2px; float:  left;}
+.portlet-title{padding:           20px;margin-left:           100px;}
+.ui-sortable-placeholder  {  border:  1px dotted  black;  visibility:
+visible   !important;   }   .switch-wrapper   {   margin-top:   60px;
+margin-left: 280px;}  .radiobutton{width:50px !important; height:50px
+!important;}  .ui-sortable-placeholder  *  {  visibility:  hidden;  }
+.background{background-repeat:no-repeat;       background-size:cover;
+position:   absolute;width:  100%;   height:  100%;top:   0px;  left:
+0px;z-index: -1} .add-layer{color: black;position:absolute; left:0px;
+top:  0px;  height:50px;width:   50px;  z-index:  2;background-color:
+black;} #sortable-delete  {position: absolute; height:  180px; width:
+180px;background-color:white ;overflow:  hidden; right:  0px; bottom:
+0px;z-index:   5;overflow:    hidden;}   .ui-slider-handle{width:50px
+!important;      height:50px       !important;margin-left:      -25px
+!important;margin-top:   -15px  !important;}   .opacitySlider{margin:
+20px;top:                100px}               #eins{background-image:
+url(px/bevoelkerungsdichte_aktuell.png);         z-index:        -1;}
+#zwei{background-image: url(px/bevoelkerungsverteilung.png); z-index:
+-2;}    #drei{background-image:    url(px/stand_volkszaehlungen.png);
+z-index:                 -3;}                 #vier{background-image:
+url(px/entwicklung_bevoelkerung_jaehrliche_angaben.png);     z-index:
+-4;}
+
+#box  { width:  200px;  height: 200px;  background-color: #ff0000;  }
+</style>
+
+<script>     $(     document    ).ready(function()     {     //slider
+$('.opacitySlider').slider({ min:  0, max:  1, step: 0.01,  value: 1,
+orientation:        "horizontal",       slide:        function(e,ui){
+//console.log($(this));  var   ebene=  $(this).attr("slider")  $('#'+
+ebene).css('opacity',     ui.value)     //slider    change     $('#'+
+ebene).css('visibility',   'visible');   //slider    unhide   }   });
+
+jQuery(function() { // Make all ul.sortable lists into sortable lists
+jQuery('ul.sortable').sortable({   tolerance:    'pointer',   cursor:
+'pointer',  dropOnEmpty:  true, connectWith:  'ul.sortable',  update:
+function(event,                         ui)                         {
+
+if(this.id == 'sortable-delete')  { // Remove the  element dropped on
+#sortable-delete jQuery('#'+ui.item.attr('id')).remove(); } else { //
+Update   code  for   the  actual   sortable   lists  }   }  });   });
+
+  $(function()  {  $( ".column"  ).sortable({  tolerance:  'pointer',
+cursor: 'pointer', dropOnEmpty:  true, connectWith: '.column', start:
+function(event,    ui)   {    var   start_pos    =   ui.item.index();
+ui.item.data('start_pos', start_pos); },  update: function(event, ui)
+{   var  start_pos   =  ui.item.data('start_pos');   var  end_pos   =
+$(ui.item).index();   var   indexchange   =  start_pos   -   end_pos;
+
+                                              //console.log(ui.item);
+//console.log(ui.item.children(".portlet-content").children(".opacitySlider").attr("slider"));
+var                                                            ebene=
+$(ui.item.children(".portlet-content").children(".opacitySlider")).attr("slider");
+var     index=      parseInt($('#'+ebene).css('z-index'));     $('#'+
+ebene).css('z-index',   (index+indexchange));  console.log(start_pos,
+end_pos);               //slider               change               }
+
+                                                                  });
+
+    $(    ".portlet"   ).addClass(    "ui-widget    ui-widget-content
+ui-helper-clearfix  ui-corner-all"   )  .find(   ".portlet-header"  )
+.addClass(  "ui-widget-header  ui-corner-all"   )  //.append(  "<span
+class='ui-icon     ui-icon-minusthick'></span>")    .end()     .find(
+".portlet-content"                                                 );
+
+        $(        ".portlet-header"       ).click(function()        {
+$(".is-expanded").not($(this).parent()).each(function(){      //reset
+$(this).children(  ".portlet-content" ).slideToggle(500,  function(){
+$(this).parent().animate({"margin-left":'0px'},  500   ,  function(){
+$(this).removeClass( "is-expanded");  //console.log("reset"); }); });
+});     if     ($(this).parent().hasClass("is-expanded")){     //hide
+$(this).next(   ".portlet-content"   ).slideToggle(500,   function(){
+$(this).parent().animate({"margin-left":'0px'},  500   ,  function(){
+$(this).removeClass( "is-expanded"); //console.log("hidden"); }); });
+}  else  { $(this).parent().animate({"margin-left":'-250px'},  500  ,
+function(){      //expand      $(this).addClass(      "is-expanded");
+$(this).children(         ".portlet-content"         ).slideToggle();
+//console.log("is-expanded");           });           }           });
+
+  $(".radiobutton").click(function(){  //radiobutton_hides Layers  if
+($(this).is(":checked")){                  var                 ebene=
+$(this).parent().attr("checkbox");   $('#'+  ebene).css('visibility',
+'hidden');  }  else{  var  ebene=  $(this).parent().attr("checkbox");
+$('#'+      ebene).css('visibility',      'visible');      }      });
+
+         $(        ".column"         ).disableSelection();        });
+
+   $(   ".add-layer"   ).click(function()   {   console.log("click");
+d=document.createElement('div');   $(d).addClass('portlet',  'hider')
+.html('text')      .appendTo($("#four").parent())     //main      div
+.click(function(){  $(this).remove();  })  .hide()  .slideToggle(300)
+.delay(5000) .slideToggle(300)  .queue(function() { $(this).remove();
+});                              });                              });
+
+var                  htmlString                  =                  $
+
+</script>                                                     </head>
+
+<body  style="height:1536px;  width:2048px; background-color:grey  ">
+<div                                                  class="column">
+
+  <div class="portlet  hider" id="one">  <div class="portlet-header">
+<div                                             class="portlet-icon"
+style="background-image:url(Verkehr.png)"></div>      <div     class=
+"portlet-title"> Verkehr </div>  </div> <div class="portlet-content">
+<div   slider=   "eins"class="opacitySlider"></div>   <div   checkbox
+="eins"class="switch-wrapper">         <input         type="checkbox"
+class="radiobutton">          </div>           </div>          </div>
+
+  <div class="portlet  hider" id="two">  <div class="portlet-header">
+<div                                             class="portlet-icon"
+style="background-image:url(Verkehr.png)"></div>      <div     class=
+"portlet-title">       Bevölkerung      </div>       </div>      <div
+class="portlet-content">                 <div                 slider=
+"zwei"class="opacitySlider"></div>            <div           checkbox
+="zwei"class="switch-wrapper">                                 <input
+type="checkbox"class="radiobutton">     </div>      </div>     </div>
+
+ <div class="portlet  hider" id="three"> <div class="portlet-header">
+<div                                             class="portlet-icon"
+style="background-image:url(Verkehr.png)"></div>      <div     class=
+"portlet-title">  Natur </div>  </div> <div  class="portlet-content">
+<div slider= "drei"class="opacitySlider"></div> <div checkbox ="drei"
+class="switch-wrapper">  <input type="checkbox"  class="radiobutton">
+</div>                          </div>                         </div>
+
+ <div  class="portlet hider" id="four">  <div class="portlet-header">
+<div                                             class="portlet-icon"
+style="background-image:url(Verkehr.png)"></div>      <div     class=
+"portlet-title">       Industrie       </div>       </div>       <div
+class="portlet-content">                 <div                 slider=
+"vier"class="opacitySlider"></div>            <div           checkbox
+="vier"class="switch-wrapper">         <input         type="checkbox"
+class="radiobutton">          </div>           </div>          </div>
+
+</div>
+
+<div class="background" id  ="vier"></div> <div class="background" id
+="drei"></div>   <div  class="background"   id  ="zwei"></div>   <div
+class="background"                  id                 ="eins"></div>
+
+<div                                         class='add-layer'></div>
+
+</body>                                                       </html>

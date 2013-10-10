@@ -33,3 +33,7 @@ tuEs();
 var person.toString() = makeObject( "{ name: { vorname: "Beat", nachname: "Suter" }, alter: 34 }" );
 
 [ 2, 3, 6, 8, 9, 10.8 ]
+
+var test = function() {
+  // statements
+}

@@ -23,6 +23,9 @@ function sayYo( wie_oft, a, b ) {
   }
   wie_oft = 10;
 }
+
+"-1" + -1 --> "-1-1"
+
 sayYo();
 sayYo();
 wie_oft = 7;
