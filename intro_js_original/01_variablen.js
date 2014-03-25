@@ -14,3 +14,4 @@ var rechnung2 = 13 % 4;  // Rest Operator, ergibt 1
 var kurz = "ein" + "wort;"
 var lang = "noch mehr" + kurz + 9 + "\tneue\nZeile";
 
+// zusätzlicher Schlusskommentar
